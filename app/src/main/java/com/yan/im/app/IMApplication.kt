@@ -1,8 +1,9 @@
-package com.yan.im
+package com.yan.im.app
 
 import android.app.Application
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMOptions
+import com.yan.im.BuildConfig
 
 /**
  *  @author      : 楠GG

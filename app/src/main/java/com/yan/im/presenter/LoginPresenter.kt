@@ -1,7 +1,9 @@
 package com.yan.im.presenter
 
+import com.hyphenate.chat.EMClient
 import com.yan.im.ext.isValidPassword
 import com.yan.im.ext.isValidUsername
+import com.yan.im.utils.EMCallBackAdapter
 
 /**
  *  @author      : 楠GG
@@ -15,7 +17,7 @@ class LoginPresenter(val view: LoginContract.View): LoginContract.Presenter {
             if (password.isValidPassword()) {
                 //开始登陆
                 view.onStartLogin()
-                loginEaseMob()
+                loginEaseMob(userName, password)
             } else view.onPasswordError()
         } else view.onUserNameError()
     }
@@ -23,7 +25,16 @@ class LoginPresenter(val view: LoginContract.View): LoginContract.Presenter {
     /**
      * 登陆到环信服务器
      */
-    private fun loginEaseMob() {
+    private fun loginEaseMob(userName: String, password: String) {
+        EMClient.getInstance().login(userName, password, object : EMCallBackAdapter{
+            //此处回调是在子线程中
+            override fun onSuccess() {
+                uiThread { view.onLoggedInSuccess() }
+            }
 
+            override fun onError(p0: Int, p1: String?) {
+                uiThread { view.onLoggedInFailed() }
+            }
+        })
     }
 }

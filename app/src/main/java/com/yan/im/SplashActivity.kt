@@ -40,5 +40,6 @@ class SplashActivity: BaseActivity(), SplashContract.View {
      */
     override fun onLoggedIn() {
         startActivity<MainActivity>()
+        finish()
     }
 }
