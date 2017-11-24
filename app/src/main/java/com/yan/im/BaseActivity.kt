@@ -1,5 +1,6 @@
 package com.yan.im
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity
  *  @description : 所有Activity的基类
  */
 abstract class BaseActivity: AppCompatActivity() {
+
+    val mProgressDialog by lazy { ProgressDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,5 +24,20 @@ abstract class BaseActivity: AppCompatActivity() {
 
     /** 布局文件 */
     abstract fun getLayoutId(): Int
+
+    /**
+     * 显示加载对话框
+     */
+    fun showProgressDialog(message: String) {
+        mProgressDialog.setMessage(message)
+        mProgressDialog.show()
+    }
+
+    /**
+     * 隐藏加载对话框
+     */
+    fun hideProgressDialog() {
+        if (mProgressDialog.isShowing) mProgressDialog.dismiss()
+    }
 
 }
