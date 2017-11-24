@@ -2,7 +2,7 @@ package com.yan.im
 
 import android.os.Handler
 import com.yan.im.contract.SplashContract
-import com.yan.im.contract.presenter.SplashPresenter
+import com.yan.im.presenter.SplashPresenter
 import org.jetbrains.anko.startActivity
 
 /**

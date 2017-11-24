@@ -1,4 +1,4 @@
-package com.yan.im.contract.presenter
+package com.yan.im.presenter
 
 import com.yan.im.contract.BasePresenter
 

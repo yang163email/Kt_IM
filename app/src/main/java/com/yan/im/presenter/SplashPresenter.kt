@@ -1,4 +1,4 @@
-package com.yan.im.contract.presenter
+package com.yan.im.presenter
 
 import com.hyphenate.chat.EMClient
 import com.yan.im.contract.SplashContract

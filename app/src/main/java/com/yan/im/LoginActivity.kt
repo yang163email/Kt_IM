@@ -1,6 +1,7 @@
 package com.yan.im
 
-import com.yan.im.contract.presenter.LoginContract
+import com.yan.im.presenter.LoginContract
+import com.yan.im.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -11,6 +12,28 @@ import org.jetbrains.anko.toast
  *  @description : 登录界面
  */
 class LoginActivity: BaseActivity(), LoginContract.View {
+    val mPresenter = LoginPresenter(this)
+
+    override fun getLayoutId(): Int = R.layout.activity_login
+
+    override fun init() {
+        super.init()
+        login.setOnClickListener { login() }
+        password.setOnEditorActionListener { v, actionId, event ->
+            login()
+            true
+        }
+    }
+
+    /**
+     * 登陆
+     */
+    private fun login() {
+        val usernameStr = userName.text.toString().trim()
+        val passwordStr = password.text.toString().trim()
+        mPresenter.login(usernameStr, passwordStr)
+    }
+
     override fun onUserNameError() {
         userName.error = getString(R.string.user_name_error)
     }
@@ -36,5 +59,4 @@ class LoginActivity: BaseActivity(), LoginContract.View {
         toast(R.string.login_failed)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_login
 }
