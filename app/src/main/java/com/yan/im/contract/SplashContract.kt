@@ -3,7 +3,7 @@ package com.yan.im.contract
 /**
  *  @author      : 楠GG
  *  @date        : 2017/11/24 15:16
- *  @description : TODO
+ *  @description : 欢迎界面协议：包含抽象p、v层
  */
 interface SplashContract {
     interface Presenter : BasePresenter {
