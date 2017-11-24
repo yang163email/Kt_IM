@@ -2,6 +2,7 @@ package com.yan.im
 
 import com.yan.im.presenter.LoginContract
 import com.yan.im.presenter.LoginPresenter
+import com.yan.im.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -29,6 +30,8 @@ class LoginActivity: BaseActivity(), LoginContract.View {
      * 登陆
      */
     private fun login() {
+        //隐藏软键盘
+        CommonUtil.hideSoftKeyboard(this)
         val usernameStr = userName.text.toString().trim()
         val passwordStr = password.text.toString().trim()
         mPresenter.login(usernameStr, passwordStr)
