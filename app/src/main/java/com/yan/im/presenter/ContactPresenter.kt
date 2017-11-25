@@ -7,7 +7,6 @@ import com.yan.im.model.ContactListItem
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
-
 /**
  *  @author      : 楠GG
  *  @date        : 2017/11/25 17:31

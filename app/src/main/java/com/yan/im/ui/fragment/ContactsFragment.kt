@@ -34,7 +34,7 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter(mPresenter.contactList)
+            adapter = ContactListAdapter(context, mPresenter.contactList)
         }
         //加载列表数据
         mPresenter.loadContacts()
