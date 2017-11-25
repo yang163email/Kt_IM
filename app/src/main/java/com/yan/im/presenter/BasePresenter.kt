@@ -1,4 +1,4 @@
-package com.yan.im.contract
+package com.yan.im.presenter
 
 import android.os.Handler
 import android.os.Looper

@@ -1,6 +1,6 @@
-package com.yan.im.presenter
+package com.yan.im.contract
 
-import com.yan.im.contract.BasePresenter
+import com.yan.im.presenter.BasePresenter
 
 /**
  *  @author      : 楠GG

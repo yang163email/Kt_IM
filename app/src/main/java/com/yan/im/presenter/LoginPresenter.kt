@@ -1,6 +1,7 @@
 package com.yan.im.presenter
 
 import com.hyphenate.chat.EMClient
+import com.yan.im.contract.LoginContract
 import com.yan.im.ext.isValidPassword
 import com.yan.im.ext.isValidUsername
 import com.yan.im.utils.EMCallBackAdapter

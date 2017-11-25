@@ -1,5 +1,7 @@
 package com.yan.im.contract
 
+import com.yan.im.presenter.BasePresenter
+
 /**
  *  @author      : 楠GG
  *  @date        : 2017/11/24 15:16

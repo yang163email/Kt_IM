@@ -3,7 +3,7 @@ package com.yan.im
 import android.Manifest
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
-import com.yan.im.presenter.LoginContract
+import com.yan.im.contract.LoginContract
 import com.yan.im.presenter.LoginPresenter
 import com.yan.im.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_login.*
