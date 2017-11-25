@@ -1,5 +1,6 @@
 package com.yan.im.contract
 
+import com.yan.im.model.ContactListItem
 import com.yan.im.presenter.BasePresenter
 
 /**
@@ -13,7 +14,7 @@ interface ContactContract {
     }
 
     interface View {
-        fun loadContactsSuccess()
+        fun loadContactsSuccess(contactList: MutableList<ContactListItem>)
         fun loadContactsFailed()
     }
 }

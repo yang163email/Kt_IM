@@ -5,6 +5,7 @@ import android.view.View
 import com.yan.im.R
 import com.yan.im.adapter.ContactListAdapter
 import com.yan.im.contract.ContactContract
+import com.yan.im.model.ContactListItem
 import com.yan.im.presenter.ContactPresenter
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
@@ -33,13 +34,13 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter()
+            adapter = ContactListAdapter(mPresenter.contactList)
         }
         //加载列表数据
         mPresenter.loadContacts()
     }
 
-    override fun loadContactsSuccess() {
+    override fun loadContactsSuccess(contactList: MutableList<ContactListItem>) {
         swipeRefreshLayout.isRefreshing = false
         //刷新数据
         recyclerView.adapter.notifyDataSetChanged()

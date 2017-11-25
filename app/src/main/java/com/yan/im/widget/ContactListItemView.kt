@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.yan.im.R
+import com.yan.im.model.ContactListItem
+import kotlinx.android.synthetic.main.view_contact_item.view.*
 
 /**
  *  @author      : 楠GG
@@ -15,5 +17,10 @@ class ContactListItemView(context: Context?, attrs: AttributeSet? = null) : Rela
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_contact_item, this)
+    }
+
+    fun bindView(contactListItem: ContactListItem) {
+        firstLetter.text = contactListItem.firstLetter.toString()
+        userName.text = contactListItem.name
     }
 }
