@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.yan.im.R
 import com.yan.im.adapter.ContactListAdapter
+import com.yan.im.contract.ContactContract
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 
@@ -12,7 +13,8 @@ import kotlinx.android.synthetic.main.header.*
  *  @date        : 2017/11/25 11:40
  *  @description : 联系人fragment
  */
-class ContactsFragment : BaseFragment() {
+class ContactsFragment : BaseFragment(), ContactContract.View {
+
     override fun getResLayoutId(): Int = R.layout.fragment_contacts
 
     override fun init() {
@@ -28,5 +30,15 @@ class ContactsFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter()
         }
+    }
+
+    override fun loadContactsSuccess() {
+        swipeRefreshLayout.isRefreshing = false
+        //刷新数据
+        recyclerView.adapter.notifyDataSetChanged()
+    }
+
+    override fun loadContactsFailed() {
+        swipeRefreshLayout.isRefreshing = false
     }
 }
