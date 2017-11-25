@@ -37,6 +37,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".RegisterActivity"/>
 
         <!--环信sdk-->
         <!-- 设置环信应用的AppKey -->
