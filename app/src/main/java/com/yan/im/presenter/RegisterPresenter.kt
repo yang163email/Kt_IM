@@ -3,11 +3,13 @@ package com.yan.im.presenter
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
+import com.hyphenate.chat.EMClient
+import com.hyphenate.exceptions.HyphenateException
 import com.yan.im.contract.RegisterContract
 import com.yan.im.ext.isValidPassword
 import com.yan.im.ext.isValidUsername
-
-
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 /**
  *  @author      : 楠GG
@@ -42,9 +44,24 @@ class RegisterPresenter(val view: RegisterContract.View): RegisterContract.Prese
         bu.signUp<BmobUser>(object : SaveListener<BmobUser>() {
             override fun done(s: BmobUser, e: BmobException?) {
                 if (e == null) {
-                    //注册成功
+                    //注册成功,注册到环信
+                    registerEaseMob(username, password)
                 } else view.onRegisterFailed()
             }
         })
+    }
+
+    private fun registerEaseMob(username: String, password: String) {
+        doAsync {
+            //注册失败会抛出HyphenateException
+            try {
+                EMClient.getInstance().createAccount(username, password) //同步方法
+                //注册成功
+                uiThread { view.onRegisterSuccess() }
+            } catch (e: HyphenateException) {
+                //注册失败
+                uiThread { view.onRegisterFailed() }
+            }
+        }
     }
 }

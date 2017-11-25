@@ -28,7 +28,7 @@ class RegisterActivity: BaseActivity(), RegisterContract.View {
     /**
      * 注册
      */
-    fun register() {
+    private fun register() {
         //先隐藏软键盘
         CommonUtil.hideSoftKeyboard(this)
         val usernameStr = userName.text.toString().trim()
@@ -55,6 +55,7 @@ class RegisterActivity: BaseActivity(), RegisterContract.View {
 
     override fun onRegisterSuccess() {
         hideProgressDialog()
+        toast(R.string.register_success)
         finish()
     }
 
