@@ -5,6 +5,7 @@ import android.view.View
 import com.yan.im.R
 import com.yan.im.adapter.ContactListAdapter
 import com.yan.im.contract.ContactContract
+import com.yan.im.presenter.ContactPresenter
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 
@@ -15,6 +16,8 @@ import kotlinx.android.synthetic.main.header.*
  */
 class ContactsFragment : BaseFragment(), ContactContract.View {
 
+    private val mPresenter = ContactPresenter(this)
+
     override fun getResLayoutId(): Int = R.layout.fragment_contacts
 
     override fun init() {
@@ -24,12 +27,16 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
 
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
+            isRefreshing = true
+            setOnRefreshListener { mPresenter.loadContacts() }
         }
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter()
         }
+        //加载列表数据
+        mPresenter.loadContacts()
     }
 
     override fun loadContactsSuccess() {
