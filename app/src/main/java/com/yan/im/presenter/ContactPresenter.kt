@@ -22,9 +22,11 @@ class ContactPresenter(val view: ContactContract.View): ContactContract.Presente
                 val usernames = EMClient.getInstance().contactManager().allContactsFromServer
                 //先根据首字母进行排序
                 usernames.sortBy { it[0] }
-                usernames.forEach {
+                usernames.forEachIndexed { index, s ->
                     //遍历获取需要的数据
-                    val contactListItem = ContactListItem(it, it[0].toUpperCase())
+                    //判断是佛显示字母。如果是第一个、或者当前与上一个相同，则为true
+                    val showFirstLetter = index == 0 || s[0] != usernames[index-1][0]
+                    val contactListItem = ContactListItem(s, s[0].toUpperCase(), showFirstLetter)
                     contactList.add(contactListItem)
                 }
                 uiThread { view.loadContactsSuccess(contactList) }

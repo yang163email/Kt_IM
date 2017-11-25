@@ -3,6 +3,7 @@ package com.yan.im.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
 import com.yan.im.R
 import com.yan.im.model.ContactListItem
@@ -20,7 +21,10 @@ class ContactListItemView(context: Context?, attrs: AttributeSet? = null) : Rela
     }
 
     fun bindView(contactListItem: ContactListItem) {
-        firstLetter.text = contactListItem.firstLetter.toString()
+        if (contactListItem.showFirstLetter) {
+            firstLetter.text = contactListItem.firstLetter.toString()
+            firstLetter.visibility = View.VISIBLE
+        } else firstLetter.visibility = View.GONE
         userName.text = contactListItem.name
     }
 }
