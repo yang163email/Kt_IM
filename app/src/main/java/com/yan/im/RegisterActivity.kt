@@ -1,6 +1,8 @@
 package com.yan.im
 
 import com.yan.im.contract.RegisterContract
+import com.yan.im.presenter.RegisterPresenter
+import com.yan.im.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.toast
 
@@ -10,6 +12,31 @@ import org.jetbrains.anko.toast
  *  @description : 注册用户界面
  */
 class RegisterActivity: BaseActivity(), RegisterContract.View {
+    private val mPresenter = RegisterPresenter(this)
+
+    override fun getLayoutId(): Int = R.layout.activity_register
+
+    override fun init() {
+        super.init()
+        register.setOnClickListener { register() }
+        confirmPassword.setOnEditorActionListener { v, actionId, event ->
+            register()
+            true    //true表示消费时间
+        }
+    }
+
+    /**
+     * 注册
+     */
+    fun register() {
+        //先隐藏软键盘
+        CommonUtil.hideSoftKeyboard(this)
+        val usernameStr = userName.text.toString().trim()
+        val passwordStr = password.text.toString().trim()
+        val confirmPasswordStr = confirmPassword.text.toString().trim()
+        mPresenter.register(usernameStr, passwordStr, confirmPasswordStr)
+    }
+
     override fun onUsernameError() {
         userName.error = getString(R.string.user_name_error)
     }
@@ -36,5 +63,4 @@ class RegisterActivity: BaseActivity(), RegisterContract.View {
         toast(R.string.register_failed)
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_register
 }
