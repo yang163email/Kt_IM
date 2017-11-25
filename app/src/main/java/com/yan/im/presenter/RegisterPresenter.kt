@@ -1,8 +1,13 @@
 package com.yan.im.presenter
 
+import cn.bmob.v3.BmobUser
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.SaveListener
 import com.yan.im.contract.RegisterContract
 import com.yan.im.ext.isValidPassword
 import com.yan.im.ext.isValidUsername
+
+
 
 /**
  *  @author      : 楠GG
@@ -13,11 +18,33 @@ class RegisterPresenter(val view: RegisterContract.View): RegisterContract.Prese
     override fun register(username: String, password: String, confirmPassword: String) {
         //检查用户名、密码
         if (username.isValidUsername()) {
-            if (password.isValidPassword() and confirmPassword.isValidPassword()) {
+            if (password.isValidPassword()) {
                 //检测两次密码是否一致
-                if (password == confirmPassword) view.onStartRegister()
+                if (password == confirmPassword) {
+                    view.onStartRegister()
+                    //开始注册
+                    registerBmob(username, password)
+                }
                 else view.onConfirmPasswordError()
             } else view.onPasswordError()
         } else view.onUsernameError()
+    }
+
+    /**
+     * 注册到 Bmob 服务器
+     */
+    private fun registerBmob(username: String, password: String) {
+        val bu = BmobUser()
+        bu.username = username
+        bu.setPassword(password)
+//        bu.email = "sendi@163.com"
+        //注意：不能用save方法进行注册
+        bu.signUp<BmobUser>(object : SaveListener<BmobUser>() {
+            override fun done(s: BmobUser, e: BmobException?) {
+                if (e == null) {
+                    //注册成功
+                } else view.onRegisterFailed()
+            }
+        })
     }
 }
