@@ -1,7 +1,9 @@
 package com.yan.im.ui.fragment
 
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.yan.im.R
+import com.yan.im.adapter.ContactListAdapter
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 
@@ -20,6 +22,11 @@ class ContactsFragment : BaseFragment() {
 
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
+        }
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ContactListAdapter()
         }
     }
 }
