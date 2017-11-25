@@ -1,18 +1,24 @@
 package com.yan.im.ui.activity
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.yan.im.R
+import com.yan.im.utils.FragmentFactory
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  *  @author      : 楠GG
  *  @date        : 2017/11/25 11:25
  *  @description ：主界面
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun getLayoutId(): Int = R.layout.activity_main
+
+    override fun init() {
+        super.init()
+        bottomBar.setOnTabReselectListener {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_frame, FragmentFactory.instance.getFragment(it))
+            transaction.commit()
+        }
     }
 }
