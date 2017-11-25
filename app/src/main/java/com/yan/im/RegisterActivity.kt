@@ -54,14 +54,19 @@ class RegisterActivity: BaseActivity(), RegisterContract.View {
     }
 
     override fun onRegisterSuccess() {
-        hideProgressDialog()
+        dismissProgressDialog()
         toast(R.string.register_success)
         finish()
     }
 
     override fun onRegisterFailed() {
-        hideProgressDialog()
+        dismissProgressDialog()
         toast(R.string.register_failed)
+    }
+
+    override fun onUserExist() {
+        dismissProgressDialog()
+        toast(R.string.user_already_exist)
     }
 
 }

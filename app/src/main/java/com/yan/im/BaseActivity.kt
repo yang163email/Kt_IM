@@ -36,7 +36,7 @@ abstract class BaseActivity: AppCompatActivity() {
     /**
      * 隐藏加载对话框
      */
-    fun hideProgressDialog() {
+    fun dismissProgressDialog() {
         if (mProgressDialog.isShowing) mProgressDialog.dismiss()
     }
 

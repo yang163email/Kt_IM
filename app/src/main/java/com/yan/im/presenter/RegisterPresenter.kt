@@ -42,11 +42,15 @@ class RegisterPresenter(val view: RegisterContract.View): RegisterContract.Prese
 //        bu.email = "sendi@163.com"
         //注意：不能用save方法进行注册
         bu.signUp<BmobUser>(object : SaveListener<BmobUser>() {
-            override fun done(s: BmobUser, e: BmobException?) {
+            override fun done(s: BmobUser?, e: BmobException?) {
                 if (e == null) {
                     //注册成功,注册到环信
                     registerEaseMob(username, password)
-                } else view.onRegisterFailed()
+                } else if(e.errorCode == 202) {
+                    //用户名已经存在
+                    view.onUserExist()
+                }
+                else view.onRegisterFailed()
             }
         })
     }

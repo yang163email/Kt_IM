@@ -84,14 +84,14 @@ class LoginActivity: BaseActivity(), LoginContract.View {
     }
 
     override fun onLoggedInSuccess() {
-        hideProgressDialog()
+        dismissProgressDialog()
         //跳转主界面
         startActivity<MainActivity>()
         finish()
     }
 
     override fun onLoggedInFailed() {
-        hideProgressDialog()
+        dismissProgressDialog()
         toast(R.string.login_failed)
     }
 
