@@ -15,7 +15,7 @@ class MainActivity : BaseActivity() {
 
     override fun init() {
         super.init()
-        bottomBar.setOnTabReselectListener {
+        bottomBar.setOnTabSelectListener {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_frame, FragmentFactory.instance.getFragment(it))
             transaction.commit()
