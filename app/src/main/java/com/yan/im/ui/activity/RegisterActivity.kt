@@ -1,5 +1,6 @@
-package com.yan.im
+package com.yan.im.ui.activity
 
+import com.yan.im.R
 import com.yan.im.contract.RegisterContract
 import com.yan.im.presenter.RegisterPresenter
 import com.yan.im.utils.CommonUtil

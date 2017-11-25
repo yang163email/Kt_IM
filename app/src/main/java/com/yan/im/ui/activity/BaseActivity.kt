@@ -1,4 +1,4 @@
-package com.yan.im
+package com.yan.im.ui.activity
 
 import android.app.ProgressDialog
 import android.os.Bundle

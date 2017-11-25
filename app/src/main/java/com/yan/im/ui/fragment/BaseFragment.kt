@@ -1,4 +1,4 @@
-package com.yan.im
+package com.yan.im.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

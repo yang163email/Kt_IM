@@ -1,8 +1,9 @@
-package com.yan.im
+package com.yan.im.ui.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
+import com.yan.im.R
 import com.yan.im.contract.LoginContract
 import com.yan.im.presenter.LoginPresenter
 import com.yan.im.utils.CommonUtil
