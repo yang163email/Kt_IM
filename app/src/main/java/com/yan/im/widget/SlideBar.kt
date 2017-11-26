@@ -57,10 +57,33 @@ class SlideBar: View {
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> setBackgroundResource(R.drawable.bg_slide_bar)
+            MotionEvent.ACTION_DOWN -> {
+                setBackgroundResource(R.drawable.bg_slide_bar)
+                //触摸获取字母
+                val index: Int = getTouchIndex(event)
+                val firstLetter = SECTIONS[index]
+                println(firstLetter)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                //触摸获取字母
+                val index: Int = getTouchIndex(event)
+                val firstLetter = SECTIONS[index]
+                println(firstLetter)
+            }
             MotionEvent.ACTION_UP -> setBackgroundColor(Color.TRANSPARENT)
         }
         return true
+    }
+
+    /**
+     * 获取触摸位置对应文本的字母
+     */
+    private fun getTouchIndex(event: MotionEvent): Int {
+        var index = (event.y / sectionHeight).toInt()
+        //越界处理
+        if (index < 0) index = 0
+        else if (index > SECTIONS.size-1) index = SECTIONS.size -1
+        return index
     }
 
     companion object {
