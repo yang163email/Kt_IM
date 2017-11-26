@@ -2,8 +2,10 @@ package com.yan.im.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.yan.im.R
 import org.jetbrains.anko.sp
@@ -16,8 +18,8 @@ import org.jetbrains.anko.sp
 class SlideBar: View {
 
     /** 每一个字母占用的高度 */
-    var sectionHeight = 0f
-    var textBaseLine = 0f
+    private var sectionHeight = 0f
+    private var textBaseLine = 0f
 
     private val paint = Paint()
 
@@ -51,6 +53,14 @@ class SlideBar: View {
             canvas.drawText(it, x, y, paint)
             y += sectionHeight
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> setBackgroundResource(R.drawable.bg_slide_bar)
+            MotionEvent.ACTION_UP -> setBackgroundColor(Color.TRANSPARENT)
+        }
+        return true
     }
 
     companion object {
