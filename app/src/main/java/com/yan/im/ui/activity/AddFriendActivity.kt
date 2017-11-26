@@ -4,6 +4,8 @@ import android.support.v7.widget.LinearLayoutManager
 import com.yan.im.R
 import com.yan.im.adapter.AddFriendListAdapter
 import com.yan.im.contract.AddFriendContract
+import com.yan.im.presenter.AddFriendPresenter
+import com.yan.im.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_add_friend.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
@@ -14,6 +16,8 @@ import org.jetbrains.anko.toast
  *  @description : 添加好友界面
  */
 class AddFriendActivity: BaseActivity(), AddFriendContract.View {
+
+    val mPresenter = AddFriendPresenter()
 
     override fun getLayoutId(): Int = R.layout.activity_add_friend
 
@@ -26,6 +30,22 @@ class AddFriendActivity: BaseActivity(), AddFriendContract.View {
             layoutManager = LinearLayoutManager(context)
             adapter = AddFriendListAdapter(context)
         }
+
+        search.setOnClickListener { search() }
+        userName.setOnEditorActionListener { v, actionId, event ->
+            search()
+            true
+        }
+    }
+
+    /**
+     * 搜索好友
+     */
+    private fun search() {
+        CommonUtil.hideSoftKeyboard(this)
+        showProgressDialog(getString(R.string.searching))
+        val key = userName.text.toString().trim()
+        mPresenter.search(key)
     }
 
     override fun onSearchSuccess() {
