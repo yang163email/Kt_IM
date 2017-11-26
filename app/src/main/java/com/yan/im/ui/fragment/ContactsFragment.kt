@@ -8,10 +8,12 @@ import com.yan.im.adapter.ContactListAdapter
 import com.yan.im.contract.ContactContract
 import com.yan.im.model.ContactListItem
 import com.yan.im.presenter.ContactPresenter
+import com.yan.im.ui.activity.AddFriendActivity
 import com.yan.im.utils.EMContactListenerAdapter
 import com.yan.im.widget.SlideBar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.startActivity
 
 /**
  *  @author      : 楠GG
@@ -58,8 +60,9 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
                 //RecyclerView滚动到指定位置
                 recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
-
         }
+
+        add.setOnClickListener { context.startActivity<AddFriendActivity>() }
 
         //加载列表数据
         mPresenter.loadContacts()
