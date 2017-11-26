@@ -1,6 +1,6 @@
 package com.yan.im.contract
 
-import com.yan.im.model.ContactListItem
+import com.yan.im.model.data.ContactListItem
 import com.yan.im.presenter.BasePresenter
 
 /**

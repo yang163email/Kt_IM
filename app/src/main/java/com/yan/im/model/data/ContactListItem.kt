@@ -1,4 +1,4 @@
-package com.yan.im.model
+package com.yan.im.model.data
 
 /**
  *  @author      : 楠GG

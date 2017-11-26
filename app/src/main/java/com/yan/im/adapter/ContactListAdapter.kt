@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hyphenate.chat.EMClient
 import com.yan.im.R
-import com.yan.im.model.ContactListItem
+import com.yan.im.model.data.ContactListItem
 import com.yan.im.ui.activity.ChatActivity
 import com.yan.im.utils.EMCallBackAdapter
 import com.yan.im.widget.ContactListItemView

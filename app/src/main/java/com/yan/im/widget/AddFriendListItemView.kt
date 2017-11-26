@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.yan.im.R
-import com.yan.im.model.AddFriendItem
+import com.yan.im.model.data.AddFriendItem
 import kotlinx.android.synthetic.main.view_add_friend_item.view.*
 
 /**

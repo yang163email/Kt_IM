@@ -6,7 +6,7 @@ import com.hyphenate.chat.EMClient
 import com.yan.im.R
 import com.yan.im.adapter.ContactListAdapter
 import com.yan.im.contract.ContactContract
-import com.yan.im.model.ContactListItem
+import com.yan.im.model.data.ContactListItem
 import com.yan.im.presenter.ContactPresenter
 import com.yan.im.ui.activity.AddFriendActivity
 import com.yan.im.utils.EMContactListenerAdapter

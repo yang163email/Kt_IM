@@ -6,7 +6,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.hyphenate.chat.EMClient
 import com.yan.im.contract.AddFriendContract
-import com.yan.im.model.AddFriendItem
+import com.yan.im.model.data.AddFriendItem
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 

@@ -3,7 +3,7 @@ package com.yan.im.presenter
 import com.hyphenate.chat.EMClient
 import com.hyphenate.exceptions.HyphenateException
 import com.yan.im.contract.ContactContract
-import com.yan.im.model.ContactListItem
+import com.yan.im.model.data.ContactListItem
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 

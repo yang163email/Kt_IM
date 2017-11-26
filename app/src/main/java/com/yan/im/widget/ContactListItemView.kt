@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.yan.im.R
-import com.yan.im.model.ContactListItem
+import com.yan.im.model.data.ContactListItem
 import kotlinx.android.synthetic.main.view_contact_item.view.*
 
 /**

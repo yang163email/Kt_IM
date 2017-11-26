@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import com.yan.im.model.AddFriendItem
+import com.yan.im.model.data.AddFriendItem
 import com.yan.im.widget.AddFriendListItemView
 
 /**
