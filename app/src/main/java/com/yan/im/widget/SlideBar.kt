@@ -18,10 +18,12 @@ import org.jetbrains.anko.sp
 class SlideBar: View {
 
     /** 每一个字母占用的高度 */
-    private var sectionHeight = 0f
-    private var textBaseLine = 0f
+    var sectionHeight = 0f
+    var textBaseLine = 0f
 
     private val paint = Paint()
+
+    var onSectionChangeListener: OnSectionChangeListener? = null
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -62,15 +64,18 @@ class SlideBar: View {
                 //触摸获取字母
                 val index: Int = getTouchIndex(event)
                 val firstLetter = SECTIONS[index]
-                println(firstLetter)
+                onSectionChangeListener?.onSectionChange(firstLetter)
             }
             MotionEvent.ACTION_MOVE -> {
                 //触摸获取字母
                 val index: Int = getTouchIndex(event)
                 val firstLetter = SECTIONS[index]
-                println(firstLetter)
+                onSectionChangeListener?.onSectionChange(firstLetter)
             }
-            MotionEvent.ACTION_UP -> setBackgroundColor(Color.TRANSPARENT)
+            MotionEvent.ACTION_UP -> {
+                setBackgroundColor(Color.TRANSPARENT)
+                onSectionChangeListener?.onSlideFinish()
+            }
         }
         return true
     }
@@ -89,5 +94,10 @@ class SlideBar: View {
     companion object {
         private val SECTIONS = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
                 "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+    }
+
+    interface OnSectionChangeListener {
+        fun onSectionChange(firstLetter: String)
+        fun onSlideFinish() //停止触碰
     }
 }

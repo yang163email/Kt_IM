@@ -9,6 +9,7 @@ import com.yan.im.contract.ContactContract
 import com.yan.im.model.ContactListItem
 import com.yan.im.presenter.ContactPresenter
 import com.yan.im.utils.EMContactListenerAdapter
+import com.yan.im.widget.SlideBar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 
@@ -45,6 +46,18 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
                 mPresenter.loadContacts()
             }
         })
+
+        slideBar.onSectionChangeListener = object : SlideBar.OnSectionChangeListener{
+            override fun onSlideFinish() {
+                section.visibility = View.GONE
+            }
+
+            override fun onSectionChange(firstLetter: String) {
+                section.text = firstLetter
+                section.visibility = View.VISIBLE
+            }
+
+        }
 
         //加载列表数据
         mPresenter.loadContacts()
