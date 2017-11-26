@@ -2,11 +2,13 @@ package com.yan.im.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.hyphenate.chat.EMClient
 import com.yan.im.R
 import com.yan.im.adapter.ContactListAdapter
 import com.yan.im.contract.ContactContract
 import com.yan.im.model.ContactListItem
 import com.yan.im.presenter.ContactPresenter
+import com.yan.im.utils.EMContactListenerAdapter
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 
@@ -36,6 +38,14 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter(context, mPresenter.contactList)
         }
+
+        EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter() {
+            override fun onContactDeleted(p0: String?) {
+                //删除联系人时，刷新列表
+                mPresenter.loadContacts()
+            }
+        })
+
         //加载列表数据
         mPresenter.loadContacts()
     }

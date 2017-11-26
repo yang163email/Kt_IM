@@ -17,6 +17,8 @@ class ContactPresenter(val view: ContactContract.View): ContactContract.Presente
 
     override fun loadContacts() {
         doAsync {
+            //加载前，先情况之前的联系人列表
+            contactList.clear()
             try {
                 val usernames = EMClient.getInstance().contactManager().allContactsFromServer
                 //先根据首字母进行排序
