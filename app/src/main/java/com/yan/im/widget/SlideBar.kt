@@ -17,6 +17,7 @@ class SlideBar: View {
 
     /** 每一个字母占用的高度 */
     var sectionHeight = 0f
+    var textBaseLine = 0f
 
     private val paint = Paint()
 
@@ -35,11 +36,17 @@ class SlideBar: View {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         sectionHeight = h* 1f / SECTIONS.size
+        //字体矩阵
+        val fontMetrics = paint.fontMetrics
+        //计算绘制文本高度
+        val textHeight = fontMetrics.descent - fontMetrics.ascent
+        //计算基准线
+        textBaseLine = sectionHeight/ 2 + (textHeight / 2 - fontMetrics.descent)
     }
 
     override fun onDraw(canvas: Canvas) {
         val x = width/2f
-        var y = sectionHeight
+        var y = textBaseLine
         SECTIONS.forEach {
             canvas.drawText(it, x, y, paint)
             y += sectionHeight
