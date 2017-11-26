@@ -1,6 +1,9 @@
 package com.yan.im.ui.activity
 
+import android.support.v7.widget.LinearLayoutManager
 import com.yan.im.R
+import com.yan.im.adapter.AddFriendListAdapter
+import kotlinx.android.synthetic.main.activity_add_friend.*
 import kotlinx.android.synthetic.main.header.*
 
 /**
@@ -14,5 +17,11 @@ class AddFriendActivity: BaseActivity() {
     override fun init() {
         super.init()
         headerTitle.text = getString(R.string.add_friend)
+
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = AddFriendListAdapter(context)
+        }
     }
 }
