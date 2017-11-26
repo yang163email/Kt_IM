@@ -17,3 +17,11 @@ fun String.isValidUsername() = matches(Regex("^[a-zA-Z]\\w{2,19}$"))
  * 匹配规则：长度3-20位，全部为数字
  */
 fun String.isValidPassword() = matches(Regex("^[0-9]{3,20}$"))
+
+/**
+ * 将 MutableMap 中的 key-value 取出，转换成可变参数 Pair 类型
+ */
+fun <K, V> MutableMap<K, V>.toVarargArray(): Array<Pair<K, V>> =
+    map {
+        Pair(it.key, it.value)
+    }.toTypedArray()
