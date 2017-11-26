@@ -12,8 +12,13 @@ import com.yan.im.BuildConfig
  *  @description : 自定义Application类
  */
 class IMApplication: Application() {
+    companion object {
+        lateinit var instance: IMApplication
+    }
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
 //        EMOptions options = new EMOptions()
         // 默认添加好友时，是不需要验证的，改成需要验证
 //        options.setAcceptInvitationAlways(false)

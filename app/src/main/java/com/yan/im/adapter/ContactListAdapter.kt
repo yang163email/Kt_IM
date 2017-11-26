@@ -1,7 +1,6 @@
 package com.yan.im.adapter
 
 import android.content.Context
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import com.yan.im.model.data.ContactListItem
 import com.yan.im.ui.activity.ChatActivity
 import com.yan.im.utils.EMCallBackAdapter
 import com.yan.im.widget.ContactListItemView
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -38,14 +38,18 @@ class ContactListAdapter(val context: Context, private val contactList: MutableL
         //长按删除好友操作
         val message = String.format(context.getString(R.string.delete_friend_message), username)
         itemView.setOnLongClickListener {
-            AlertDialog.Builder(context)
+            context.alert(message, context.getString(R.string.delete_friend_title)) {
+                positiveButton(R.string.confirm) { deleteFriend(username) }
+                negativeButton(R.string.cancel) {}
+            }.show()
+           /* AlertDialog.Builder(context)
                     .setTitle(R.string.delete_friend_title)
                     .setMessage(message)
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.confirm) {dialog, which ->
                         deleteFriend(username)
                     }
-                    .show()
+                    .show()*/
             true
         }
     }
