@@ -17,7 +17,7 @@ import org.jetbrains.anko.toast
  */
 class AddFriendActivity: BaseActivity(), AddFriendContract.View {
 
-    val mPresenter = AddFriendPresenter()
+    private val mPresenter = AddFriendPresenter(this)
 
     override fun getLayoutId(): Int = R.layout.activity_add_friend
 
