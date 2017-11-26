@@ -33,4 +33,13 @@ class IMDatabase {
                 override fun parseRow(columns: Map<String, Any?>): Contact = Contact(columns.toMutableMap())
             })
         }
+
+    /**
+     * 删除所有联系人
+     */
+    fun deleteAllContacts() {
+        dbHelper.use {
+            delete(ContactTable.NAME, null, null)
+        }
+    }
 }
