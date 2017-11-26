@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import com.yan.im.R
+import com.yan.im.model.AddFriendItem
+import kotlinx.android.synthetic.main.view_add_friend_item.view.*
 
 /**
  *  @author      : 楠GG
@@ -18,5 +20,10 @@ class AddFriendListItemView: RelativeLayout {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_add_friend_item, this)
+    }
+
+    fun bindView(addFriendItem: AddFriendItem) {
+        userName.text = addFriendItem.username
+        timestamp.text = addFriendItem.timestamp
     }
 }
