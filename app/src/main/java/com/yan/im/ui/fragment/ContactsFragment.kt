@@ -55,6 +55,8 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
             override fun onSectionChange(firstLetter: String) {
                 section.text = firstLetter
                 section.visibility = View.VISIBLE
+                //RecyclerView滚动到指定位置
+                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
 
         }
@@ -62,6 +64,14 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
         //加载列表数据
         mPresenter.loadContacts()
     }
+
+    /**
+     * 由首字母获取RecyclerView对应条目的位置
+     */
+    private fun getPosition(firstLetter: String): Int =
+        mPresenter.contactList.binarySearch {
+            it.firstLetter.minus(firstLetter[0])
+        }
 
     override fun loadContactsSuccess(contactList: MutableList<ContactListItem>) {
         swipeRefreshLayout.isRefreshing = false
