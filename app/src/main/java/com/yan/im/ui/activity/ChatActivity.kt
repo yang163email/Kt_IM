@@ -1,9 +1,11 @@
 package com.yan.im.ui.activity
 
+import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.yan.im.R
+import com.yan.im.adapter.MessageListAdapter
 import com.yan.im.contract.ChatContract
 import com.yan.im.presenter.ChatPresenter
 import com.yan.im.utils.CommonUtil
@@ -32,6 +34,16 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         edit.setOnEditorActionListener { v, actionId, event ->
             send()
             true
+        }
+
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = MessageListAdapter(context, mPresenter.messages)
         }
     }
 
