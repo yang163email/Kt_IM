@@ -26,7 +26,10 @@ class MessageListAdapter(val context: Context, val messages: MutableList<EMMessa
         else ITEM_TYPE_RECEIVE_MESSAGE
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-
+        if (getItemViewType(position) == ITEM_TYPE_SEND_MESSAGE) {
+            val sendMessageItemView = holder?.itemView as SendMessageItemView
+            sendMessageItemView.bindView(messages[position])
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
