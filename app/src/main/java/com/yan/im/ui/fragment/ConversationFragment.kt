@@ -1,6 +1,7 @@
 package com.yan.im.ui.fragment
 
 import com.yan.im.R
+import kotlinx.android.synthetic.main.header.*
 
 /**
  *  @author      : 楠GG
@@ -9,4 +10,9 @@ import com.yan.im.R
  */
 class ConversationFragment: BaseFragment() {
     override fun getResLayoutId(): Int = R.layout.fragment_conversation
+
+    override fun init() {
+        super.init()
+        headerTitle.text = getString(R.string.message)
+    }
 }
