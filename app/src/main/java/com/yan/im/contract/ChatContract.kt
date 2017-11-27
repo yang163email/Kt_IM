@@ -1,5 +1,6 @@
 package com.yan.im.contract
 
+import com.hyphenate.chat.EMMessage
 import com.yan.im.presenter.BasePresenter
 
 /**
@@ -10,6 +11,7 @@ import com.yan.im.presenter.BasePresenter
 interface ChatContract {
     interface Presenter: BasePresenter {
         fun sendMessage(contact: String, message: String)
+        fun addMessage(username: String, p0: MutableList<EMMessage>?)
     }
 
     interface View {

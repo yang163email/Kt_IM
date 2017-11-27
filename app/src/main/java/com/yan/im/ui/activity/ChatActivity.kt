@@ -4,11 +4,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import com.yan.im.R
 import com.yan.im.adapter.MessageListAdapter
 import com.yan.im.contract.ChatContract
 import com.yan.im.presenter.ChatPresenter
 import com.yan.im.utils.CommonUtil
+import com.yan.im.utils.EMMessageListenerAdapter
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
@@ -22,6 +25,12 @@ class ChatActivity: BaseActivity(), ChatContract.View {
 
     val mPresenter = ChatPresenter(this)
     lateinit var username: String
+    val messageListener = object : EMMessageListenerAdapter() {
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            mPresenter.addMessage(username, p0)
+            runOnUiThread { recyclerView.adapter.notifyDataSetChanged() }
+        }
+    }
 
     override fun getLayoutId(): Int = R.layout.activity_chat
 
@@ -35,8 +44,8 @@ class ChatActivity: BaseActivity(), ChatContract.View {
             send()
             true
         }
-
         initRecyclerView()
+        EMClient.getInstance().chatManager().addMessageListener(messageListener)
     }
 
     private fun initRecyclerView() {
