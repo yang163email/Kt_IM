@@ -4,9 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import com.hyphenate.chat.EMClient
 import com.yan.im.R
 import com.yan.im.model.data.AddFriendItem
+import com.yan.im.utils.EMCallBackAdapter
 import kotlinx.android.synthetic.main.view_add_friend_item.view.*
+import org.jetbrains.anko.runOnUiThread
+import org.jetbrains.anko.toast
 
 /**
  *  @author      : 楠GG
@@ -32,5 +36,18 @@ class AddFriendListItemView: RelativeLayout {
             add.text = context.getString(R.string.add)
             add.isEnabled = true
         }
+        add.setOnClickListener { addFriend(addFriendItem.username) }
+    }
+
+    private fun addFriend(username: String) {
+        EMClient.getInstance().contactManager().aysncAddContact(username, null, object : EMCallBackAdapter{
+            override fun onSuccess() {
+                context.runOnUiThread { toast(R.string.send_add_friend_success) }
+            }
+
+            override fun onError(p0: Int, p1: String?) {
+                context.runOnUiThread { toast(R.string.send_add_friend_failed) }
+            }
+        })
     }
 }
