@@ -29,6 +29,9 @@ class MessageListAdapter(val context: Context, val messages: MutableList<EMMessa
         if (getItemViewType(position) == ITEM_TYPE_SEND_MESSAGE) {
             val sendMessageItemView = holder?.itemView as SendMessageItemView
             sendMessageItemView.bindView(messages[position])
+        } else {
+            val receiveMessageItemView = holder?.itemView as ReceiveMessageItemView
+            receiveMessageItemView.bindView(messages[position])
         }
     }
 
