@@ -16,6 +16,8 @@ class ConversationListAdapter(val context: Context, val conversations: MutableLi
     override fun getItemCount(): Int = conversations.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        val conversationListItemView = holder?.itemView as ConversationListItemView
+        conversationListItemView.bindView(conversations[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
