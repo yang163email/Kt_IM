@@ -1,6 +1,7 @@
 package com.yan.im.ui.activity
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -56,6 +57,17 @@ class ChatActivity: BaseActivity(), ChatContract.View {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = MessageListAdapter(context, mPresenter.messages)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        //如果是闲置状态，并且是第一个时，加载更多数据
+                        val linearLayoutManager = recyclerView?.layoutManager as LinearLayoutManager
+                        if (linearLayoutManager.findFirstVisibleItemPosition() == 0) {
+                            mPresenter.loadMoreMessages(username)
+                        }
+                    }
+                }
+            })
         }
     }
 
@@ -104,6 +116,11 @@ class ChatActivity: BaseActivity(), ChatContract.View {
     override fun onMessageLoaded() {
         recyclerView.adapter.notifyDataSetChanged()
         scrollToBottom()
+    }
+
+    override fun onMoreMessageLoaded(size: Int) {
+        recyclerView.adapter.notifyDataSetChanged()
+        recyclerView.scrollToPosition(size)
     }
 
     /**
