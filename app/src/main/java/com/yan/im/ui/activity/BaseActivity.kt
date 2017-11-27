@@ -30,6 +30,7 @@ abstract class BaseActivity: AppCompatActivity() {
      */
     fun showProgressDialog(message: String) {
         mProgressDialog.setMessage(message)
+        mProgressDialog.setCanceledOnTouchOutside(false)
         mProgressDialog.show()
     }
 

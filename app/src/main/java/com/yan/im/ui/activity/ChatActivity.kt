@@ -10,7 +10,6 @@ import com.yan.im.R
 import com.yan.im.adapter.MessageListAdapter
 import com.yan.im.contract.ChatContract
 import com.yan.im.presenter.ChatPresenter
-import com.yan.im.utils.CommonUtil
 import com.yan.im.utils.EMMessageListenerAdapter
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
@@ -29,6 +28,8 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         override fun onMessageReceived(p0: MutableList<EMMessage>?) {
             mPresenter.addMessage(username, p0)
             runOnUiThread { recyclerView.adapter.notifyDataSetChanged() }
+            //滑动到底部
+            scrollToBottom()
         }
     }
 
@@ -57,7 +58,7 @@ class ChatActivity: BaseActivity(), ChatContract.View {
     }
 
     private fun send() {
-        CommonUtil.hideSoftKeyboard(this)
+//        CommonUtil.hideSoftKeyboard(this)
         val message = edit.text.toString()
         mPresenter.sendMessage(username, message)
     }
@@ -95,6 +96,14 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         toast(R.string.send_message_success)
         //清空编辑框
         edit.text.clear()
+        scrollToBottom()
+    }
+
+    /**
+     * 滚动到底部
+     */
+    private fun scrollToBottom() {
+        recyclerView.smoothScrollToPosition(mPresenter.messages.size - 1)
     }
 
     override fun onSendMessageFailed() {
