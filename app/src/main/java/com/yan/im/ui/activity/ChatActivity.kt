@@ -5,6 +5,8 @@ import android.text.TextWatcher
 import android.view.View
 import com.yan.im.R
 import com.yan.im.contract.ChatContract
+import com.yan.im.presenter.ChatPresenter
+import com.yan.im.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
@@ -16,12 +18,27 @@ import org.jetbrains.anko.toast
  */
 class ChatActivity: BaseActivity(), ChatContract.View {
 
+    val mPresenter = ChatPresenter(this)
+    lateinit var username: String
+
     override fun getLayoutId(): Int = R.layout.activity_chat
 
     override fun init() {
         super.init()
         initHeader()
         initEditText()
+
+        send.setOnClickListener { send() }
+        edit.setOnEditorActionListener { v, actionId, event ->
+            send()
+            true
+        }
+    }
+
+    private fun send() {
+        CommonUtil.hideSoftKeyboard(this)
+        val message = edit.text.toString()
+        mPresenter.sendMessage(username, message)
     }
 
     private fun initEditText() {
@@ -43,7 +60,7 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         back.visibility = View.VISIBLE
         back.setOnClickListener { finish() }
 
-        val username = intent.getStringExtra("username")
+        username = intent.getStringExtra("username")
         val titleStr = String.format(getString(R.string.chat_title), username)
         headerTitle.text = titleStr
     }
