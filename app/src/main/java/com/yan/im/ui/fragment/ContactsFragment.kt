@@ -24,37 +24,34 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
 
     private val mPresenter = ContactPresenter(this)
 
+    private val contactListener = object : EMContactListenerAdapter() {
+        override fun onContactDeleted(p0: String?) {
+            //重新获取联系人数据
+            mPresenter.loadContacts()
+        }
+
+        override fun onContactAdded(p0: String?) {
+            //删除联系人时，刷新列表
+            mPresenter.loadContacts()
+        }
+    }
+
     override fun getResLayoutId(): Int = R.layout.fragment_contacts
 
     override fun init() {
         super.init()
-        headerTitle.text = getString(R.string.contact)
-        add.visibility = View.VISIBLE
+        initHeader()
+        initSwipeRefreshLayout()
+        initRecyclerView()
+        EMClient.getInstance().contactManager().setContactListener(contactListener)
+        initSlideBar()
 
-        swipeRefreshLayout.apply {
-            setColorSchemeResources(R.color.qq_blue)
-            isRefreshing = true
-            setOnRefreshListener { mPresenter.loadContacts() }
-        }
+        //加载列表数据
+        mPresenter.loadContacts()
+    }
 
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter(context, mPresenter.contactList)
-        }
-
-        EMClient.getInstance().contactManager().setContactListener(object : EMContactListenerAdapter() {
-            override fun onContactDeleted(p0: String?) {
-                //重新获取联系人数据
-                mPresenter.loadContacts()
-            }
-
-            override fun onContactAdded(p0: String?) {
-                //删除联系人时，刷新列表
-                mPresenter.loadContacts()
-            }
-        })
-
-        slideBar.onSectionChangeListener = object : SlideBar.OnSectionChangeListener{
+    private fun initSlideBar() {
+        slideBar.onSectionChangeListener = object : SlideBar.OnSectionChangeListener {
             override fun onSlideFinish() {
                 section.visibility = View.GONE
             }
@@ -66,11 +63,27 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
                 recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
         }
+    }
 
+    private fun initRecyclerView() {
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ContactListAdapter(context, mPresenter.contactList)
+        }
+    }
+
+    private fun initSwipeRefreshLayout() {
+        swipeRefreshLayout.apply {
+            setColorSchemeResources(R.color.qq_blue)
+            isRefreshing = true
+            setOnRefreshListener { mPresenter.loadContacts() }
+        }
+    }
+
+    private fun initHeader() {
+        headerTitle.text = getString(R.string.contact)
+        add.visibility = View.VISIBLE
         add.setOnClickListener { context.startActivity<AddFriendActivity>() }
-
-        //加载列表数据
-        mPresenter.loadContacts()
     }
 
     /**
@@ -89,5 +102,11 @@ class ContactsFragment : BaseFragment(), ContactContract.View {
 
     override fun loadContactsFailed() {
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //页面销毁，移除监听器
+        EMClient.getInstance().contactManager().removeContactListener(contactListener)
     }
 }
