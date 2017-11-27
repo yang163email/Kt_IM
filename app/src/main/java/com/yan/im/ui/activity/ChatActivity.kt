@@ -39,7 +39,7 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         super.init()
         initHeader()
         initEditText()
-        
+
         send.setOnClickListener { send() }
         edit.setOnEditorActionListener { v, actionId, event ->
             send()
@@ -47,6 +47,8 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         }
         initRecyclerView()
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
+
+        mPresenter.loadMessages(username)
     }
 
     private fun initRecyclerView() {
@@ -96,6 +98,11 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         toast(R.string.send_message_success)
         //清空编辑框
         edit.text.clear()
+        scrollToBottom()
+    }
+
+    override fun onMessageLoaded() {
+        recyclerView.adapter.notifyDataSetChanged()
         scrollToBottom()
     }
 
