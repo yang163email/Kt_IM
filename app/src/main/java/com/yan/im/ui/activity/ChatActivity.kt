@@ -39,7 +39,7 @@ class ChatActivity: BaseActivity(), ChatContract.View {
         super.init()
         initHeader()
         initEditText()
-
+        
         send.setOnClickListener { send() }
         edit.setOnEditorActionListener { v, actionId, event ->
             send()

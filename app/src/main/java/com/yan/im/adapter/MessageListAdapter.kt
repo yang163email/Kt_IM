@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.hyphenate.chat.EMMessage
+import com.hyphenate.util.DateUtils
 import com.yan.im.widget.ReceiveMessageItemView
 import com.yan.im.widget.SendMessageItemView
 
@@ -26,13 +27,25 @@ class MessageListAdapter(val context: Context, val messages: MutableList<EMMessa
         else ITEM_TYPE_RECEIVE_MESSAGE
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+        val showTimestamp = isShowTimestamp(position)
         if (getItemViewType(position) == ITEM_TYPE_SEND_MESSAGE) {
             val sendMessageItemView = holder?.itemView as SendMessageItemView
-            sendMessageItemView.bindView(messages[position])
+            sendMessageItemView.bindView(messages[position], showTimestamp)
         } else {
             val receiveMessageItemView = holder?.itemView as ReceiveMessageItemView
-            receiveMessageItemView.bindView(messages[position])
+            receiveMessageItemView.bindView(messages[position], showTimestamp)
         }
+    }
+
+    /**
+     * 是否显示时间戳
+     */
+    private fun isShowTimestamp(position: Int): Boolean {
+        var showTimestamp = true
+        if (position > 0) {
+            showTimestamp = !DateUtils.isCloseEnough(messages[position-1].msgTime, messages[position].msgTime)
+        }
+        return showTimestamp
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =

@@ -27,12 +27,15 @@ class SendMessageItemView: RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_send_message_item, this)
     }
 
-    fun bindView(emMessage: EMMessage) {
-        updateTimestamp(emMessage)
+    fun bindView(emMessage: EMMessage, showTimestamp: Boolean) {
+        updateTimestamp(emMessage, showTimestamp)
         updateMessage(emMessage)
         updateProgress(emMessage)
     }
 
+    /**
+     * 更新加载图片
+     */
     private fun updateProgress(emMessage: EMMessage) {
         emMessage.status().let {
             when (it) {
@@ -51,6 +54,9 @@ class SendMessageItemView: RelativeLayout {
         }
     }
 
+    /**
+     * 更新消息
+     */
     private fun updateMessage(emMessage: EMMessage) {
         if ((emMessage.type == EMMessage.Type.TXT)) {
             sendMessage.text = (emMessage.body as EMTextMessageBody).message
@@ -59,8 +65,15 @@ class SendMessageItemView: RelativeLayout {
         }
     }
 
-    private fun updateTimestamp(emMessage: EMMessage) {
-        val msgTime = emMessage.msgTime
-        timestamp.text = DateUtils.getTimestampString(Date(msgTime))
+    /**
+     * 更新时间戳
+     */
+    private fun updateTimestamp(emMessage: EMMessage, showTimestamp: Boolean) {
+        if (showTimestamp) {
+            //如果需要显示，则将时间戳显示出来
+            val msgTime = emMessage.msgTime
+            timestamp.text = DateUtils.getTimestampString(Date(msgTime))
+            timestamp.visibility = View.VISIBLE
+        } else timestamp.visibility = View.GONE
     }
 }

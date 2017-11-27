@@ -3,6 +3,7 @@ package com.yan.im.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.RelativeLayout
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMTextMessageBody
@@ -25,8 +26,8 @@ class ReceiveMessageItemView : RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_receive_message_item, this)
     }
 
-    fun bindView(emMessage: EMMessage) {
-        updateTimestamp(emMessage)
+    fun bindView(emMessage: EMMessage, showTimestamp: Boolean) {
+        updateTimestamp(emMessage, showTimestamp)
         updateMessage(emMessage)
     }
 
@@ -38,8 +39,12 @@ class ReceiveMessageItemView : RelativeLayout {
         }
     }
 
-    private fun updateTimestamp(emMessage: EMMessage) {
-        val msgTime = emMessage.msgTime
-        timestamp.text = DateUtils.getTimestampString(Date(msgTime))
+    private fun updateTimestamp(emMessage: EMMessage, showTimestamp: Boolean) {
+        if (showTimestamp) {
+            //如果需要显示，则将时间戳显示出来
+            val msgTime = emMessage.msgTime
+            timestamp.text = DateUtils.getTimestampString(Date(msgTime))
+            timestamp.visibility = View.VISIBLE
+        } else timestamp.visibility = View.GONE
     }
 }
