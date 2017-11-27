@@ -4,6 +4,8 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.exceptions.HyphenateException
 import com.yan.im.contract.ContactContract
 import com.yan.im.model.data.ContactListItem
+import com.yan.im.model.db.Contact
+import com.yan.im.model.db.IMDatabase
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -17,8 +19,10 @@ class ContactPresenter(val view: ContactContract.View): ContactContract.Presente
 
     override fun loadContacts() {
         doAsync {
-            //加载前，先情况之前的联系人列表
+            //加载前，先清空之前的联系人列表
             contactList.clear()
+            //加载前，先删除数据库联系人
+            IMDatabase.instance.deleteAllContacts()
             try {
                 val usernames = EMClient.getInstance().contactManager().allContactsFromServer
                 //先根据首字母进行排序
@@ -29,6 +33,10 @@ class ContactPresenter(val view: ContactContract.View): ContactContract.Presente
                     val showFirstLetter = index == 0 || s[0] != usernames[index-1][0]
                     val contactListItem = ContactListItem(s, s[0].toUpperCase(), showFirstLetter)
                     contactList.add(contactListItem)
+
+                    //保存联系人到数据库
+                    val contact = Contact(mutableMapOf("name" to s))
+                    IMDatabase.instance.saveContact(contact)
                 }
                 uiThread { view.loadContactsSuccess(contactList) }
             } catch (e: HyphenateException) {

@@ -25,5 +25,12 @@ class AddFriendListItemView: RelativeLayout {
     fun bindView(addFriendItem: AddFriendItem) {
         userName.text = addFriendItem.username
         timestamp.text = addFriendItem.timestamp
+        if (addFriendItem.isAdded) {
+            add.text = context.getString(R.string.already_added)
+            add.isEnabled = false
+        } else {
+            add.text = context.getString(R.string.add)
+            add.isEnabled = true
+        }
     }
 }
