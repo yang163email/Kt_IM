@@ -32,7 +32,7 @@ class ConversationFragment: BaseFragment() {
         super.init()
         headerTitle.text = getString(R.string.message)
         initRecyclerView()
-        loadConversations()
+//        loadConversations()
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
     }
 
