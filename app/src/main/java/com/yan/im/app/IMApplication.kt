@@ -3,8 +3,10 @@ package com.yan.im.app
 import android.app.Application
 import cn.bmob.v3.Bmob
 import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMOptions
 import com.yan.im.BuildConfig
+import com.yan.im.utils.EMMessageListenerAdapter
 
 /**
  *  @author      : 楠GG
@@ -14,6 +16,13 @@ import com.yan.im.BuildConfig
 class IMApplication: Application() {
     companion object {
         lateinit var instance: IMApplication
+    }
+
+    val messageListener = object : EMMessageListenerAdapter() {
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            //如果是在前台，播放短的声音
+            //如果是在后台，播放长的声音
+        }
     }
 
     override fun onCreate() {
@@ -33,5 +42,8 @@ class IMApplication: Application() {
 
         //bmob初始化
         Bmob.initialize(this, "0b0614db59730ab6559dcfb1f1255967")
+
+        //在Application中监听消息状态
+        EMClient.getInstance().chatManager().addMessageListener(messageListener)
     }
 }
