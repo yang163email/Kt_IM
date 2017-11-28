@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity() {
 
     val messageListener = object : EMMessageListenerAdapter() {
-        override fun onCmdMessageReceived(p0: MutableList<EMMessage>?) {
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
             updateBottomBarUnReadCount()
         }
     }

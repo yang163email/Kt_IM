@@ -3,11 +3,14 @@ package com.yan.im.app
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
+import android.media.AudioManager
+import android.media.SoundPool
 import cn.bmob.v3.Bmob
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMOptions
 import com.yan.im.BuildConfig
+import com.yan.im.R
 import com.yan.im.utils.EMMessageListenerAdapter
 
 /**
@@ -22,9 +25,24 @@ class IMApplication: Application() {
 
     val messageListener = object : EMMessageListenerAdapter() {
         override fun onMessageReceived(p0: MutableList<EMMessage>?) {
-            //如果是在前台，播放短的声音
-            //如果是在后台，播放长的声音
+            if (isForeground()) {
+                //如果是在前台，播放短的声音
+                soundPool.play(duan, 1f, 1f, 0, 0, 1f)
+            }else {
+                //如果是在后台，播放长的声音
+                soundPool.play(yulu, 1f, 1f, 0, 0, 1f)
+            }
         }
+    }
+
+    val soundPool = SoundPool(2, AudioManager.STREAM_MUSIC, 0)
+
+    val duan by lazy {
+        soundPool.load(instance, R.raw.duan, 0)
+    }
+
+    val yulu by lazy {
+        soundPool.load(instance, R.raw.yulu, 0)
     }
 
     override fun onCreate() {

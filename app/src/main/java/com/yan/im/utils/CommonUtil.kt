@@ -16,6 +16,10 @@ object CommonUtil {
      */
     fun hideSoftKeyboard(activity: AppCompatActivity) {
         val manager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        manager.hideSoftInputFromWindow(activity.currentFocus.windowToken, 0)
+        activity.currentFocus.let { v->
+            v.windowToken.let {
+                manager.hideSoftInputFromWindow(it, 0)
+            }
+        }
     }
 }
