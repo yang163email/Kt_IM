@@ -1,6 +1,8 @@
 package com.yan.im.app
 
+import android.app.ActivityManager
 import android.app.Application
+import android.content.Context
 import cn.bmob.v3.Bmob
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
@@ -45,5 +47,18 @@ class IMApplication: Application() {
 
         //在Application中监听消息状态
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
+    }
+
+    /**
+     * 判断当前APP是否在前台
+     */
+    private fun isForeground(): Boolean {
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        activityManager.runningAppProcesses.forEach {
+            if (it.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true
+            }
+        }
+        return false
     }
 }
