@@ -1,16 +1,19 @@
 package com.yan.im.app
 
-import android.app.ActivityManager
-import android.app.Application
+import android.app.*
 import android.content.Context
+import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.media.SoundPool
 import cn.bmob.v3.Bmob
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.hyphenate.chat.EMOptions
+import com.hyphenate.chat.EMTextMessageBody
 import com.yan.im.BuildConfig
 import com.yan.im.R
+import com.yan.im.ui.activity.ChatActivity
 import com.yan.im.utils.EMMessageListenerAdapter
 
 /**
@@ -31,7 +34,35 @@ class IMApplication: Application() {
             }else {
                 //如果是在后台，播放长的声音
                 soundPool.play(yulu, 1f, 1f, 0, 0, 1f)
+                //弹出通知
+                showNotification(p0)
             }
+        }
+    }
+
+    /**
+     * 弹出通知
+     */
+    private fun showNotification(p0: MutableList<EMMessage>?) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        p0?.forEach {
+            var contentText = getString(R.string.no_text_message)
+            if (it.type == EMMessage.Type.TXT) {
+                contentText = (it.body as EMTextMessageBody).message
+            }
+
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("username", it.conversationId())
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val notification = Notification.Builder(this)
+                    .setContentTitle(getString(R.string.receive_new_message))
+                    .setContentText(contentText)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.avatar1))
+                    .setSmallIcon(R.mipmap.ic_contact)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build()
+            notificationManager.notify(1, notification)
         }
     }
 
